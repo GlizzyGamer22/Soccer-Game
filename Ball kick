@@ -1,0 +1,20 @@
+local l__ReplicatedStorage__1 = game:GetService("ReplicatedStorage");
+local l__DropBallEvent__2 = l__ReplicatedStorage__1:WaitForChild("DropBallEvent");
+local l__RemoveBallEvent__3 = l__ReplicatedStorage__1:WaitForChild("RemoveBallEvent");
+local u1 = nil;
+local l__LocalPlayer__2 = game.Players.LocalPlayer;
+l__ReplicatedStorage__1:WaitForChild("KickBallEvent").OnClientEvent:Connect(function(p1, p2, p3, p4)
+	if u1 and l__LocalPlayer__2.UserId ~= p1.UserId then
+		u1.Position = Vector3.new(u1.Position.X, p2.Y, u1.Position.Z);
+		u1.Velocity = p3;
+		u1.RotVelocity = p4;
+	end;
+end);
+l__DropBallEvent__2.OnClientEvent:Connect(function()
+	u1 = workspace.FootballField:WaitForChild("SoccerBall");
+end);
+l__RemoveBallEvent__3.OnClientEvent:Connect(function()
+	if u1 then
+		u1 = nil;
+	end;
+end);
