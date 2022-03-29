@@ -1,0 +1,38 @@
+local l__ReplicatedStorage__1 = game:GetService("ReplicatedStorage");
+local l__RemoveBallEvent__2 = l__ReplicatedStorage__1:WaitForChild("RemoveBallEvent");
+local u1 = nil;
+function curveBall()
+	if u1 then
+		if 10 <= u1.Position.Y then
+			local l__RotVelocity__3 = u1.RotVelocity;
+			local v4 = math.min(math.abs(l__RotVelocity__3.Y), 30);
+			if 5 <= v4 then
+				if 55 <= u1.Velocity.Magnitude then
+					local v5 = nil;
+					local v6 = nil;
+					v5 = math.atan2(u1.Velocity.X, u1.Velocity.Z);
+					v6 = 0.04 * v4 * 90 / (30 * u1.Velocity.Magnitude);
+					if 0 < l__RotVelocity__3.Y then
+						local v7 = v5 + v6;
+					else
+						v7 = v5 - v6;
+					end;
+					local v8 = Vector2.new(u1.Velocity.X, u1.Velocity.Z);
+					u1.Velocity = Vector3.new(math.sin(v7) * v8.Magnitude, u1.Velocity.Y, math.cos(v7) * v8.Magnitude);
+				end;
+			end;
+		end;
+	end;
+end;
+l__ReplicatedStorage__1:WaitForChild("DropBallEvent").OnClientEvent:Connect(function()
+	u1 = workspace.FootballField:WaitForChild("SoccerBall");
+end);
+l__RemoveBallEvent__2.OnClientEvent:Connect(function()
+	if u1 then
+		u1 = nil;
+	end;
+end);
+while true do
+	curveBall();
+	wait(0.05);
+end;
