@@ -1,0 +1,25 @@
+local l__Humanoid__1 = script.Parent:WaitForChild("Humanoid");
+local l__UpdateWalkSpeed__2 = game:GetService("ReplicatedStorage"):WaitForChild("UpdateWalkSpeed");
+local l__WalkSpeed__3 = l__Humanoid__1.WalkSpeed;
+local v4 = Vector3.new(0, 0, 0);
+l__Humanoid__1:SetStateEnabled(Enum.HumanoidStateType.Climbing, false);
+l__Humanoid__1:SetStateEnabled(Enum.HumanoidStateType.Physics, false);
+l__Humanoid__1:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics, true);
+local u1 = l__WalkSpeed__3 + 7;
+local u2 = false;
+l__Humanoid__1:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+	if l__Humanoid__1.MoveDirection ~= v4 then
+		if not (l__Humanoid__1.WalkSpeed < u1) or not (not u2) then
+			return;
+		end;
+	else
+		l__Humanoid__1.WalkSpeed = l__WalkSpeed__3;
+		l__UpdateWalkSpeed__2:FireServer(script.Parent.Name, l__Humanoid__1.WalkSpeed);
+		return;
+	end;
+	u2 = true;
+	l__Humanoid__1.WalkSpeed = l__Humanoid__1.WalkSpeed + 1;
+	l__UpdateWalkSpeed__2:FireServer(script.Parent.Name, l__Humanoid__1.WalkSpeed);
+	wait(0.2);
+	u2 = false;
+end);
