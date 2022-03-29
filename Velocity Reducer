@@ -1,0 +1,49 @@
+local l__ReplicatedStorage__1 = game:GetService("ReplicatedStorage");
+local l__RemoveBallEvent__2 = l__ReplicatedStorage__1:WaitForChild("RemoveBallEvent");
+local u1 = nil;
+local u2 = false;
+function reduceVelocity()
+	if u1 then
+
+	else
+		wait();
+		return;
+	end;
+	if 0.1 < u1.Velocity.Magnitude then
+		if u1.Position.Y < 6 then
+			if not u2 then
+
+			else
+				wait();
+				return;
+			end;
+		else
+			wait();
+			return;
+		end;
+	else
+		wait();
+		return;
+	end;
+	u2 = true;
+	local v3 = Instance.new("BodyAngularVelocity");
+	v3.AngularVelocity = Vector3.new(0, 0, 0);
+	v3.Parent = u1;
+	v3.MaxTorque = Vector3.new(20, 20, 20);
+	v3.P = 20;
+	wait(0.2);
+	v3:Destroy();
+	u2 = false;
+end;
+l__ReplicatedStorage__1:WaitForChild("DropBallEvent").OnClientEvent:Connect(function()
+	u1 = workspace.FootballField:WaitForChild("SoccerBall");
+	u2 = false;
+end);
+l__RemoveBallEvent__2.OnClientEvent:Connect(function()
+	if u1 then
+		u1 = nil;
+	end;
+end);
+while true do
+	reduceVelocity();
+end;
